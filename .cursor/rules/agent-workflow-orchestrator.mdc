@@ -1,0 +1,144 @@
+---
+description: "When user says any of these phrases, activate this workflow (even if spoken in non-english languages): - 'start workflow' - 'begin analysis' - 'run agents' - 'start process' - 'execute workflow' - 'comece'"
+alwaysApply: false
+---
+# Agent Workflow Orchestrator
+
+Agent sequence, skills, and purpose are defined in `AGENTS.md` (always loaded). This rule defines **orchestration logic only**: control flow, decision points, completion checks, and error handling.
+
+## AskQuestion Protocol
+ALL decision points use the AskQuestion tool. Never wait for free-text.
+- Unique `id` per question: `workflow-{context}`
+- Unique `id` per option: `{action}-{detail}`
+- Display status/summary BEFORE each AskQuestion
+- Never ask the same question twice unless user restarts
+
+## Step 1: Entry Point
+
+AskQuestion id: `workflow-entry` / prompt: "What would you like to do?"
+- `start-phase1`: Phase 1 — Problem Analysis (Agents 0→1→[Pain Point Analyst: 2A→review→2B]→2C→3→4→5‖6)
+- `start-phase2`: Phase 2 — Solution Ideation (Agents S6→S7→S8→S9→S10)
+- `start-phase3`: Phase 3 — Delivery (Agents 11→12)
+- `check-status`: Scan dirs, show status, re-ask
+- `resume-workflow`: Resume Protocol
+
+## Step 2A: Phase 1 Setup
+
+AskQuestion id: `phase1-mode` → `end-to-end` or `step-by-step`.
+
+## Step 2B: Phase 2 Setup
+
+Verify Phase 1 deliverables exist:
+- `/1-problem/1d-problem-output/pain-report.md`
+- `/1-problem/1d-problem-output/problem-report.md`
+- `/1-problem/1c-asis-journey/asis-journey.md`
+
+Missing → Error Handling. Present → AskQuestion id: `phase2-mode` → `end-to-end`, `step-by-step`, or `go-back`.
+
+## Step 2C: Phase 3 Setup
+
+Verify Phase 2 deliverables exist:
+- `/2-solution/2f-solution-output/product-brief.md`
+- `/2-solution/2d-prioritization/mvp-scope.md`
+
+Missing → Error Handling. Present → AskQuestion id: `phase3-mode` → `end-to-end`, `step-by-step`, or `go-back`.
+
+## Agent Execution via Subagents
+
+Each agent is invoked as a **Task subagent**:
+1. Display guardrail reminder (see Pre-Execution Reminder)
+2. Invoke via Task tool: "Read and execute the `{skill-name}` skill. Read required inputs and produce outputs as specified."
+3. Verify completion check passes
+4. Show completion summary
+5. In step-by-step mode: AskQuestion for transition
+
+### Pain Point Analysis Block (Agents 2A → 2B)
+Agents 2A and 2B are **NOT invoked directly** by this orchestrator. They are managed by the **Pain Point Analyst** agent (`.cursor/agents/pain-point-analyst.md`), which must run at conversation level to spawn its own subagents.
+
+When the workflow reaches Agent 2A:
+1. Display: "Pain point analysis requires the Pain Point Analyst agent. This agent runs at conversation level and manages decomposition, quality review, and clustering autonomously."
+2. AskQuestion id: `transition-to-painpoint-analyst`:
+   - `switch-agent`: "I'll switch to Pain Point Analyst now"
+   - `skip-painpoints`: "Skip pain point analysis, continue to Agent 3"
+3. If `switch-agent`: Instruct user to select the **Pain Point Analyst** agent from the agent selector and run it. When done, return to this orchestrator and resume from Agent 2C/3.
+4. If `skip-painpoints`: Continue to next agent (warn about missing dependencies).
+
+### Parallel Execution
+Agents 5‖6 can run in parallel after Agent 4. Agents 11‖12 can run in parallel. Use simultaneous Task calls (max 4).
+
+## Completion Checks
+
+| Agent | Check | Key Output |
+|-------|-------|------------|
+| 0 | File exists | `/0-documentation/broad-context.md` |
+| 1 | All interviews processed | `/1-problem/1a-interview-analysis/*.md` |
+| 2A | Granular list created | `/1-problem/1b-painpoints/1b0-granular/all-painpoints-granular.md` |
+| Review | Review reports exist | `/1-problem/1b-painpoints/1b0-granular/*-review.md` |
+| 2B | Clusters + mapping | `/1-problem/1b-painpoints/painpoint-mapping.md` |
+| 2C | JTBD mapping | `/1-problem/1b-painpoints/1b2-jtbd/jtbd-mapping.md` |
+| 3 | Journey per source | `/1-problem/1c-asis-journey/1c2-asis-breakdown/*.md` |
+| 4 | Consolidated journey | `/1-problem/1c-asis-journey/asis-journey.md` |
+| 5 | Both reports | `/1-problem/1d-problem-output/pain-report.md` + `problem-report.md` |
+| 6 | Journey viz | `/1-problem/1d-problem-output/journey-output.md` |
+| S6 | Opportunities | `/2-solution/2a-opportunities/opportunities-identification.md` |
+| S7 | Future journey | `/2-solution/2b-tobe-journey/consolidated-future-journey.md` |
+| S8 | Concepts | `/2-solution/2c-solution-concepts/solution-concepts.md` |
+| S9 | MVP scope | `/2-solution/2d-prioritization/mvp-scope.md` |
+| S10 | Product brief | `/2-solution/2f-solution-output/product-brief.md` |
+| 11 | Structure map | `/3-delivery/confluence/_structure-map.md` |
+| 12 | Initiative + epics | `/3-delivery/jira/initiative.md` |
+
+## Phase Branching Points
+
+### After Agent 4
+AskQuestion id: `transition-after-agent-4`:
+- `continue-both`: Run 5 + 6 in parallel
+- `continue-5-only` / `continue-6-only`
+- `pause-workflow` / `restart-workflow`
+
+### Phase 1 Complete
+AskQuestion id: `phase1-complete`:
+- `start-phase2` → Step 2B
+- `review-outputs` → list files, re-ask
+- `done`
+
+### Phase 2 Complete
+AskQuestion id: `phase2-complete`:
+- `start-phase3` → Step 2C
+- `review-outputs` → list files, re-ask
+- `done`
+
+### Phase 3 Complete
+AskQuestion id: `workflow-complete`:
+- `review-all` / `review-phase1` / `review-phase2` / `review-phase3` / `done`
+
+## Transition Protocol (Step-by-Step)
+
+After each agent, AskQuestion id: `transition-after-agent-{X}`:
+- `continue-next` / `pause-workflow` / `restart-agent` / `restart-workflow`
+
+## Error Handling
+
+### Missing Dependencies
+AskQuestion id: `error-missing-deps`:
+- `create-manual`: pause for user to create
+- `skip-agent`: continue (may affect quality)
+- `stop-workflow`: stop entirely
+
+### Agent Failure
+AskQuestion id: `error-agent-failure`:
+- `retry-agent` / `skip-agent` / `stop-workflow`
+
+## Resume Protocol
+
+Scan `/0-documentation/`, `/1-problem/`, `/2-solution/`, `/3-delivery/` for existing deliverables.
+Show: last completed agent, next pending, found vs missing files.
+AskQuestion id: `resume-choice`:
+- `continue-from-next` / `restart-from-last` / `fresh-start` / `go-back`
+
+## Pre-Execution Reminder
+
+Before each agent:
+```
+Guardrails: No invented numbers. Tag estimates as [AI estimation]. Reference sources as [Source: file.md]. Mark assumptions as [Assumption: ...]. Quote first, interpret second.
+```

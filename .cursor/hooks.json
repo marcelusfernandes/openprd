@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "python3 .cursor/scripts/validate-guardrails.py",
+        "matcher": "^(1-problem|2-solution|3-delivery)/.*\\.md$"
+      }
+    ]
+  }
+}

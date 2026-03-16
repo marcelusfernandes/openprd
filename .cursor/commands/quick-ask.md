@@ -1,0 +1,1 @@
+Apenas responda sem complacência e tentando agradar para conseguir extrair informações que realmente fazem sentido, não implemente nenhuma alteração.

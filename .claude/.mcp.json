@@ -1,0 +1,159 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "CONFLUENCE_URL": "${CONFLUENCE_URL}",
+        "CONFLUENCE_USERNAME": "${CONFLUENCE_USERNAME}",
+        "CONFLUENCE_API_TOKEN": "${CONFLUENCE_API_TOKEN}",
+        "JIRA_URL": "${JIRA_URL}",
+        "JIRA_USERNAME": "${JIRA_USERNAME}",
+        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+      }
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      }
+    },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_TOKEN": "${NOTION_TOKEN}"
+      }
+    },
+    "google-workspace": {
+      "command": "npx",
+      "args": ["-y", "google-docs-mcp"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}"
+      }
+    },
+    "amplitude": {
+      "command": "npx",
+      "args": ["-y", "@amplitude/mcp-server"],
+      "env": {
+        "AMPLITUDE_API_KEY": "${AMPLITUDE_API_KEY}",
+        "AMPLITUDE_SECRET_KEY": "${AMPLITUDE_SECRET_KEY}"
+      }
+    },
+    "mixpanel": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.mixpanel.com/mcp"]
+    },
+    "posthog": {
+      "command": "uvx",
+      "args": ["posthog-mcp", "--personal-api-key", "${POSTHOG_API_KEY}", "--project-id", "${POSTHOG_PROJECT_ID}"]
+    },
+    "bigquery": {
+      "command": "uvx",
+      "args": ["mcp-server-bigquery", "--project", "${BIGQUERY_PROJECT_ID}", "--location", "${BIGQUERY_LOCATION}"]
+    },
+    "snowflake": {
+      "command": "uvx",
+      "args": [
+        "--python=3.12", "mcp_snowflake_server",
+        "--account", "${SNOWFLAKE_ACCOUNT}",
+        "--warehouse", "${SNOWFLAKE_WAREHOUSE}",
+        "--user", "${SNOWFLAKE_USER}",
+        "--password", "${SNOWFLAKE_PASSWORD}",
+        "--role", "${SNOWFLAKE_ROLE}",
+        "--database", "${SNOWFLAKE_DATABASE}",
+        "--schema", "${SNOWFLAKE_SCHEMA}"
+      ]
+    },
+    "metabase": {
+      "command": "npx",
+      "args": ["-y", "@cognitionai/metabase-mcp-server", "--all"],
+      "env": {
+        "METABASE_URL": "${METABASE_URL}",
+        "METABASE_API_KEY": "${METABASE_API_KEY}"
+      }
+    },
+    "tableau": {
+      "command": "npx",
+      "args": ["-y", "@tableau/mcp-server@latest"],
+      "env": {
+        "SERVER": "${TABLEAU_SERVER}",
+        "SITE_NAME": "${TABLEAU_SITE_NAME}",
+        "PAT_NAME": "${TABLEAU_PAT_NAME}",
+        "PAT_VALUE": "${TABLEAU_PAT_VALUE}"
+      }
+    },
+    "redash": {
+      "command": "npx",
+      "args": ["-y", "@suthio/redash-mcp"],
+      "env": {
+        "REDASH_URL": "${REDASH_URL}",
+        "REDASH_API_KEY": "${REDASH_API_KEY}"
+      }
+    },
+    "linear": {
+      "type": "url",
+      "url": "https://mcp.linear.app/sse"
+    },
+    "launchdarkly": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@launchdarkly/mcp-server",
+        "--", "mcp", "start",
+        "--api-key", "${LAUNCHDARKLY_API_KEY}"
+      ]
+    },
+    "zendesk": {
+      "command": "npx",
+      "args": ["-y", "zendesk-mcp-server"],
+      "env": {
+        "ZENDESK_SUBDOMAIN": "${ZENDESK_SUBDOMAIN}",
+        "ZENDESK_EMAIL": "${ZENDESK_EMAIL}",
+        "ZENDESK_API_TOKEN": "${ZENDESK_API_TOKEN}"
+      }
+    },
+    "intercom": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.intercom.com/mcp"],
+      "env": {
+        "INTERCOM_TOKEN": "${INTERCOM_TOKEN}"
+      }
+    },
+    "salesforce": {
+      "command": "npx",
+      "args": ["-y", "@salesforce/mcp", "--orgs", "${SALESFORCE_ORG_ALIAS}", "--toolsets", "all"]
+    },
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
+    },
+    "productboard": {
+      "command": "npx",
+      "args": ["-y", "productboard-mcp"],
+      "env": {
+        "PRODUCTBOARD_API_TOKEN": "${PRODUCTBOARD_API_TOKEN}"
+      }
+    },
+    "dovetail": {
+      "command": "npx",
+      "args": ["-y", "@dovetail/mcp"],
+      "env": {
+        "DOVETAIL_API_TOKEN": "${DOVETAIL_API_TOKEN}"
+      }
+    },
+    "palantir-foundry": {
+      "command": "npx",
+      "args": ["-y", "palantir-mcp", "--foundry-api-url", "${FOUNDRY_API_URL}"],
+      "env": {
+        "FOUNDRY_TOKEN": "${FOUNDRY_TOKEN}"
+      }
+    },
+    "openviking": {
+      "command": "/home/mrcls/Desktop/mrcls/prd-skills/.venv/openviking/bin/python",
+      "args": ["/home/mrcls/Desktop/mrcls/prd-skills/_tools/openviking-mcp-bridge.py"]
+    }
+  }
+}

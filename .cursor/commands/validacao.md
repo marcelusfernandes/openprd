@@ -1,0 +1,1 @@
+Execute as validações usando o skill `guardrails-validator` (em `.cursor/skills/guardrails-validator/SKILL.md`) e o script `.cursor/scripts/validate-guardrails.py` onde o usuário definir. Se deixar em branco pergunte se é em alguma pasta específica ou em todo o projeto

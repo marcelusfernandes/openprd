@@ -1,0 +1,28 @@
+---
+description: Core data integrity rules for all agent outputs. Always active.
+alwaysApply: true
+---
+# Data Integrity Guardrails
+
+## Financial Claims
+- NEVER use dollar amounts, ROI percentages, or savings claims without `[AI estimation based on X]` tag
+- Use qualitative language: "Substantial investment", "Strong ROI potential", "Significant value"
+
+## Performance Claims
+- NEVER use specific percentages or guaranteed outcomes without source or `[AI estimation]` tag
+- Use conservative language: "Substantial improvement", "Significant reduction potential"
+
+## Source Attribution
+- Every claim must have `[Source: filename.md]` or `[AI estimation based on X]`
+- Mark assumptions as `[AI Assumption: requires validation]`
+- Mark uncertainty as `[AI Uncertain: requires validation]`
+- Tag inferences clearly: `[AI Inference: ...]` or `[Analysis: ...]`
+
+## Agent-Specific Strictness
+- **Problem Space (Agents 0-6):** No financial speculation. All claims reference source files.
+- **Solution Space (Agents 6-10):** Conservative estimates only, tagged. Conceptual focus.
+
+## Enforcement
+Violations in files under `1-problem/`, `2-solution/`, or `3-delivery/` are checked by `.cursor/scripts/validate-guardrails.py` via hooks. Critical violations block delivery.
+
+

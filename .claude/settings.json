@@ -1,0 +1,31 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "PostToolCall": [
+      {
+        "event": "PostToolCall",
+        "matcher": {
+          "tool_name": "write",
+          "file_path": "^(1-problem|2-solution|3-delivery)/.*\\.md$"
+        },
+        "command": "python3 .cursor/scripts/validate-guardrails.py"
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(python3 .cursor/scripts/validate-guardrails.py)",
+      "Bash(git *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cat *)"
+    ]
+  }
+}

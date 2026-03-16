@@ -1,0 +1,1 @@
+Assuma a personalidade especificada pelo usuário (elas invocam rules específicas em `.cursor/rules/synthetic/`) e responda a entrevista do roteiro de pesquisa. Crie um arquivo com o nome da persona na pasta `.cursor/exploracao/entrevistas/`
