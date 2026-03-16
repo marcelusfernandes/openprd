@@ -36,12 +36,8 @@
       }
     },
     "amplitude": {
-      "command": "npx",
-      "args": ["-y", "@amplitude/mcp-server"],
-      "env": {
-        "AMPLITUDE_API_KEY": "${AMPLITUDE_API_KEY}",
-        "AMPLITUDE_SECRET_KEY": "${AMPLITUDE_SECRET_KEY}"
-      }
+      "type": "url",
+      "url": "https://mcp.amplitude.com/mcp"
     },
     "mixpanel": {
       "command": "npx",
@@ -117,10 +113,7 @@
     },
     "intercom": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.intercom.com/mcp"],
-      "env": {
-        "INTERCOM_TOKEN": "${INTERCOM_TOKEN}"
-      }
+      "args": ["-y", "mcp-remote", "https://mcp.intercom.com/mcp"]
     },
     "salesforce": {
       "command": "npx",
@@ -150,10 +143,6 @@
       "env": {
         "FOUNDRY_TOKEN": "${FOUNDRY_TOKEN}"
       }
-    },
-    "openviking": {
-      "command": "/home/mrcls/Desktop/mrcls/prd-skills/.venv/openviking/bin/python",
-      "args": ["/home/mrcls/Desktop/mrcls/prd-skills/_tools/openviking-mcp-bridge.py"]
     }
   }
 }

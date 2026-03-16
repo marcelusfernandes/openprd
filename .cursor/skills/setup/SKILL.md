@@ -399,21 +399,18 @@ Você pode importar documentos manualmente quando precisar.
 - Setar env vars: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
 
 ### Amplitude
-**Precisa:** API Key, Secret Key
+**Precisa:** Nada! Usa OAuth no navegador
 **Guia para o PM:**
 ```
-Para conectar o Amplitude:
+Amplitude é fácil! Na primeira vez que eu precisar acessar,
+vai abrir uma janela no navegador pedindo pra você fazer login
+no Amplitude. Só autorizar e pronto!
 
-1. No Amplitude, vá em Settings (ícone de engrenagem)
-2. Clique em "Projects" e selecione seu projeto
-3. Na aba "General", copie:
-   - API Key (é público, sem problema)
-   - Secret Key (esse é privado, não compartilhe)
-
-Me envie os dois!
+Seus dados ficam protegidos pelas mesmas permissões que você
+já tem no Amplitude — só acessa o que você pode ver.
 ```
 **Configuração automática:**
-- Setar env vars: `AMPLITUDE_API_KEY`, `AMPLITUDE_SECRET_KEY`
+- MCP remoto com OAuth: `https://mcp.amplitude.com/mcp` (sem tokens)
 
 ### Mixpanel
 **Precisa:** Nada! Usa OAuth no navegador
@@ -611,16 +608,12 @@ Para conectar o Zendesk:
 - Setar env vars: `ZENDESK_SUBDOMAIN`, `ZENDESK_EMAIL`, `ZENDESK_API_TOKEN`
 
 ### Intercom
-**Precisa:** Access Token
+**Precisa:** Nada! Usa OAuth no navegador
 **Guia para o PM:**
 ```
-Para conectar o Intercom:
-
-1. Acesse: https://app.intercom.com/a/apps/_/developer-hub
-2. Crie um novo app ou selecione existente
-3. Vá em "Authentication" e copie o Access Token
-
-Se não tiver acesso ao Developer Hub, peça pro admin!
+Intercom é fácil! Na primeira vez que eu acessar,
+abre uma tela no navegador pra você autorizar.
+Só fazer login e clicar "Allow"!
 ```
 **Configuração automática:**
 - Setar env var: `INTERCOM_TOKEN`
