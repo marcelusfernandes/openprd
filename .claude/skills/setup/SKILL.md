@@ -361,20 +361,13 @@ Se não for admin, peça pro admin da equipe seguir esses passos!
 - Setar env vars: `SLACK_BOT_TOKEN`, `SLACK_TEAM_ID`
 
 ### Notion
-**Precisa:** Integration token
+**Precisa:** Nada! Usa OAuth no navegador
 **Guia para o PM:**
 ```
-Para conectar o Notion:
-
-1. Acesse: https://www.notion.so/my-integrations
-2. Clique em "New integration"
-3. Dê o nome "Product Discovery"
-4. Selecione o workspace certo
-5. Clique em "Submit" e copie o token (começa com ntn_)
-6. IMPORTANTE: No Notion, vá nas páginas que quer acessar,
-   clique em "..." → "Connections" → adicione "Product Discovery"
-
-Me envie o token quando tiver!
+Notion é fácil! Na primeira vez que eu precisar acessar,
+vai abrir uma janela no navegador pedindo pra você autorizar.
+Faça login no Notion, selecione as páginas que quer compartilhar,
+e clique em "Allow". Pronto!
 ```
 **Configuração automática:**
 - Setar env var: `NOTION_TOKEN`
