@@ -105,3 +105,19 @@ Before writing the final file, verify:
 4. **No information loss:** Every Agent 1 quote appears in at least one granular PP.
 
 If the sanity check fails, iterate on the catalog before producing the output file. The downstream Painpoint Reviewer will validate quality, but this agent should deliver a well-decomposed first pass.
+
+## Agent Team Mode (quando ativado)
+
+Se CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS estiver habilitado, o Agent 2A participa de um debate com o Painpoint Reviewer e o Agent 2B em vez de rodar isoladamente.
+
+### Protocolo de debate:
+1. Agent 2A gera a decomposição granular e compartilha com os teammates
+2. Painpoint Reviewer analisa e levanta objeções: "PP-5 não é atômico — deveria ser 2 problemas separados"
+3. Agent 2A responde: defende ou aceita o split
+4. Agent 2B observa o debate e sugere agrupamentos preliminares: "PP-3 e PP-7 parecem do mesmo cluster"
+5. O debate converge em uma decomposição validada E com clusters preliminares
+
+### Vantagem sobre modo sequencial:
+- Reviewer pode questionar 2A em tempo real (não só aprovar/rejeitar)
+- 2B antecipa agrupamentos durante a decomposição (não começa do zero)
+- Consenso emerge do debate, não de decisão unilateral

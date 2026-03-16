@@ -172,6 +172,7 @@ For each agent:
 
 - **Agents 5 and 6** run in parallel (both depend on Agent 4 output, neither depends on the other)
 - **Pain Point sub-pipeline (2A → review → 2B)**: Agent 2A produces granular decomposition, the painpoint-reviewer validates it, then Agent 2B clusters the reviewed output. Run these three sequentially within the pipeline.
+- **Se CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS habilitado**: Em vez de rodar 2A → review → 2B sequencialmente, spawnar os 3 como agent team. Cada um traz sua perspectiva e debatem a decomposição/validação/clustering simultaneamente. Resultado mais robusto, ~2x tempo.
 
 ## Completion Checks
 

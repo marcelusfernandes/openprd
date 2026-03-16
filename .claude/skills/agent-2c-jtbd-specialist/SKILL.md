@@ -74,3 +74,24 @@ Context where the user's current solution fails:
 - Consolidated mapping links jobs ↔ clusters ↔ process stages
 - No invented data — all outcomes derived from pain point evidence
 - Source references for all claims: `[Source: filename.md]`
+
+## Agent Team Mode (quando ativado)
+
+Se CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS estiver habilitado, o Agent 2C pode debater com o Agent 2B sobre a qualidade dos clusters antes de transformar em JTBDs.
+
+### Protocolo de debate:
+1. Agent 2B apresenta os clusters formados
+2. Agent 2C avalia: "Esse cluster é grande demais — são 2 jobs diferentes"
+3. Agent 2B responde: defende a unidade do cluster ou aceita split
+4. Agent 2C propõe JTBDs preliminares: "O job principal desse cluster é X"
+5. Agent 2B valida: "Esse job cobre todos os pain points do cluster? Faltou PP-12"
+6. Debate converge em clusters refinados + JTBDs validados
+
+### Vantagem sobre modo sequencial:
+- 2C questiona clusters antes de aceitar como input (não assume que 2B tá certo)
+- 2B valida se JTBDs realmente cobrem todos os pain points do cluster
+- Jobs to Be Done mais precisos porque os 2 agentes co-construíram
+
+### Quando usar agent team vs subagent:
+- **Subagent (padrão):** Projetos simples (< 20 pain points), velocidade prioritária
+- **Agent team:** Projetos complexos (> 20 pain points), precisão prioritária

@@ -41,3 +41,18 @@ Tag responses with [Agent2B].
 - 4-6 clusters created, each with clear relationship rationale
 - TYPE preserved for every pain point
 - Consolidated mapping with prioritization framework (P0/P1/P2)
+
+## Agent Team Mode
+
+No modo agent team, o Agent 2B participa do debate desde a decomposição:
+
+### Comportamento no debate:
+- Observar decomposição do 2A e antecipar clusters: "Estou vendo 3 pain points sobre onboarding"
+- Questionar se um split do 2A vai quebrar um cluster natural: "Se separar PP-5, os dois ficam orphans"
+- Propor relações causais: "PP-2 causa PP-7 — devem ficar no mesmo cluster"
+- Validar com 2A se a intenção original se mantém após clustering
+
+### Vantagem:
+- Clusters levam em conta a intenção da decomposição (2A explica por que separou)
+- Reviewer valida a coerência entre decomposição e agrupamento
+- Resultado: pain points atômicos + clusters + validação — tudo num debate só
