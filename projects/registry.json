@@ -1,1 +1,16 @@
-{"version": 2, "active": null, "projects": [], "domains": []}
+{
+  "version": 2,
+  "active": "openprd-self-discovery",
+  "projects": [
+    {
+      "name": "OpenPRD Self-Discovery",
+      "slug": "openprd-self-discovery",
+      "created": "2026-03-15",
+      "status": "active",
+      "description": "Discovery do próprio OpenPRD — identificar gaps, necessidades e oportunidades de evolução",
+      "group": "OpenPRD",
+      "links": []
+    }
+  ],
+  "domains": []
+}
